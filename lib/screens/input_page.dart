@@ -1,10 +1,13 @@
+import 'package:calculate_bmi/bmi_calculator_brain.dart';
 import 'package:calculate_bmi/reusable_card.dart';
 import 'package:calculate_bmi/round_icon_button.dart';
+import 'package:calculate_bmi/screens/result_page.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'constants.dart';
-import 'icon_content.dart';
+import '../bottom_button.dart';
+import '../constants.dart';
+import '../icon_content.dart';
 
 enum Gender {
   male,
@@ -189,7 +192,7 @@ class _InputPageState extends State<InputPage> {
                                       age++;
                                     });
                                   },
-                                  color: Colors.black12,
+                                  color: Color(0xFF4C4F5E),
                                   icon: FontAwesomeIcons.plus,
                                 ),
                                 SizedBox(
@@ -201,7 +204,7 @@ class _InputPageState extends State<InputPage> {
                                       age--;
                                     });
                                   },
-                                  color: Colors.black12,
+                                  color: Color(0xFF4C4F5E),
                                   icon: FontAwesomeIcons.minus,
                                 ),
                               ])
@@ -211,6 +214,24 @@ class _InputPageState extends State<InputPage> {
                   ),
                 ],
               ),
+            ),
+            BottomButton(
+              onTap: () {
+                BMICalculatorBrain cmiCalcBrain =
+                    BMICalculatorBrain(height: height, weight: weight);
+
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ResultPage(
+                      bmiResult: cmiCalcBrain.getBMIAsString(),
+                      resultText: cmiCalcBrain.getResult(),
+                      interpretation: cmiCalcBrain.getInterpretation(),
+                    ),
+                  ),
+                );
+              },
+              title: 'Calculate BMI',
             ),
           ],
         ));
